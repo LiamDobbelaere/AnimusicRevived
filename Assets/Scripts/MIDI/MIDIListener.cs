@@ -15,6 +15,7 @@ public class MIDIListener : MonoBehaviour {
         TextAsset asset = Resources.Load("storm") as TextAsset;
 
         var reader = new MIDIFileReader(asset.bytes);
+        reader.Verbose = true;
         reader.Read();
 
         currentTrackChunk = reader.MIDIFile.TrackChunks[reader.MIDIFile.TrackChunks.Count - 1];
@@ -44,7 +45,7 @@ public class MIDIListener : MonoBehaviour {
             //newSource.clip = sawTone.clip;
 
             sawTone.pitch = Mathf.Pow(2, (note + transpose) / 12.0f);
-            sawTone.Play();
+            sawTone.PlayOneShot(sawTone.clip);
 
         }
         else if (ev.GetType().Equals(typeof(MIDINoteOffEvent)))

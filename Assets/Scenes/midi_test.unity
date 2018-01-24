@@ -200,6 +200,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1040818096}
+  - component: {fileID: 1040818099}
   - component: {fileID: 1040818097}
   - component: {fileID: 1040818098}
   m_Layer: 0
@@ -228,7 +229,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1040818095}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbe5e6000d707ef4dae1423448e8b040, type: 3}
   m_Name: 
@@ -242,8 +243,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: caef80e830f579d409b27c243b4bfc85, type: 3}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 8131e24d28b17e14d99d8266daa474b9, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -313,6 +314,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1040818099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040818095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fa7422909e5244786a79dcd7adc333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  midiFilePath: storm
+  ShouldPlayFile: 1
+  bankFilePath: GM Bank/gm
+  bufferSize: 1024
+  midiNote: 60
+  midiNoteVolume: 100
+  midiInstrument: 0
 --- !u!1 &2094020406
 GameObject:
   m_ObjectHideFlags: 0

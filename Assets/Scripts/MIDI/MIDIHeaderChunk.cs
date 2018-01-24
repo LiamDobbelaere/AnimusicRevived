@@ -5,17 +5,16 @@ using System.Text;
 
 namespace Assets.Scripts.MIDI
 {
-    public class MIDIHeaderChunk : IMIDIChunk
+    public class MIDIHeaderChunk
     {
-        public static string TYPE = "MThd";
+        public const string TYPE = "MThd";
 
-        public MIDIHeaderChunk(Int32 length)
+        public MIDIHeaderChunk()
         {
-            Type = TYPE;
-            Length = length;
+
         }
 
-        public string Type { get; set; }
-        public Int32 Length { get; set; }
+        public Int16 Format { get; set; }
+        public Int16 TicksPerQuarterNote { get; set; }
     }
 }

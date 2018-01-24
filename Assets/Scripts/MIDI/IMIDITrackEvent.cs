@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Assets.Scripts.MIDI
 {
-    public interface IMIDIChunk
+    public interface IMIDITrackEvent
     {
-        string Type { get; set; }
-        Int32 Length { get; set; }
+        int DeltaTime { get; set; }
     }
 }

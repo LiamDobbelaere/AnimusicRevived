@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4512691, g: 0.50008625, b: 0.5687022, a: 1}
+  m_IndirectSpecularColor: {r: 0.44390437, g: 0.49327743, b: 0.5727684, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 297572392}
   - component: {fileID: 297572391}
   - component: {fileID: 297572390}
+  - component: {fileID: 297572394}
+  - component: {fileID: 297572395}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -192,6 +194,160 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &297572394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 297572389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 6327efd93ee858d4f8fff8fa62d60447, type: 2}
+--- !u!114 &297572395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 297572389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8519df6eabced8842952224f14a54f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1022726462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1022726465}
+  - component: {fileID: 1022726464}
+  - component: {fileID: 1022726463}
+  m_Layer: 0
+  m_Name: MIDISynthesizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1022726463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1022726462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fa7422909e5244786a79dcd7adc333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  midiFilePath: Midi/animusic_1_v2
+  ShouldPlayFile: 1
+  bankFilePath: GM Bank/gm
+  bufferSize: 1024
+  midiNote: 60
+  midiNoteVolume: 100
+  midiInstrument: 0
+  actors:
+  - {fileID: 1862065257}
+  - {fileID: 297572395}
+--- !u!82 &1022726464
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1022726462}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!4 &1022726465
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1022726462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.95910263, y: 2.4703608, z: -5.122193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1224717835
 Prefab:
   m_ObjectHideFlags: 0
@@ -201,7 +357,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 22414968, guid: 8a749df5e56f6422ba9fe64d83915a89, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.398532
+      value: 8.398533
       objectReference: {fileID: 0}
     - target: {fileID: 22414968, guid: 8a749df5e56f6422ba9fe64d83915a89, type: 2}
       propertyPath: m_LocalPosition.y
@@ -284,7 +440,6 @@ GameObject:
   - component: {fileID: 1862065256}
   - component: {fileID: 1862065257}
   - component: {fileID: 1862065259}
-  - component: {fileID: 1862065258}
   m_Layer: 0
   m_Name: Keyboard
   m_TagString: Untagged
@@ -319,25 +474,25 @@ MonoBehaviour:
   keyLLeft: {fileID: 4992705215521298, guid: 8fd4160843adb4f44823fbc78a70efb8, type: 2}
   keyLRight: {fileID: 4838876380920152, guid: d74a57015be298547880f81b51dc536d, type: 2}
   keyM: {fileID: 4218857706268940, guid: 576980938b2aa27469b1b531f3fa7476, type: 2}
+  keyMSR: {fileID: 4317645314911114, guid: c15c5775b579647438423574ec5d1e0b, type: 2}
+  keyMSL: {fileID: 4698184959878274, guid: 283d4083745b52b409016e9dd449c5b7, type: 2}
   keyBlack: {fileID: 4950582567570332, guid: b1caed29faf231e4d9a93ee140dd5ee5, type: 2}
---- !u!114 &1862065258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1862065255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3fa7422909e5244786a79dcd7adc333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  midiFilePath: Midi/animusic_1
-  ShouldPlayFile: 1
-  bankFilePath: GM Bank/gm
-  bufferSize: 1024
-  midiNote: 60
-  midiNoteVolume: 100
-  midiInstrument: 0
+  whiteKeyColors:
+  - {r: 1, g: 0.14705884, b: 0.55294114, a: 0}
+  - {r: 0.7261663, g: 0.20588237, b: 1, a: 0}
+  - {r: 0.31617647, g: 0.4623732, b: 1, a: 0}
+  - {r: 0.3897059, g: 1, b: 0.82322526, a: 0}
+  - {r: 0.19090615, g: 0.78676474, b: 0.24432795, a: 0}
+  - {r: 0.89423037, g: 0.9044118, b: 0.16625217, a: 0}
+  - {r: 0.99264705, g: 0.6452206, b: 0.12408088, a: 0}
+  blackKeyOffsets:
+  - 0.21
+  - 0.21
+  - 0.21
+  - 0.21
+  - 0.21
+  - 0.21
+  - 0.21
 --- !u!82 &1862065259
 AudioSource:
   m_ObjectHideFlags: 0
@@ -476,10 +631,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2094020406}
-  m_LocalRotation: {x: 0.9414019, y: -0.057950974, z: 0.25224784, w: 0.216276}
+  m_LocalRotation: {x: 0.23010685, y: -0.79670316, z: 0.42407504, w: 0.3639715}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 154.123, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 122.517, y: 45.70999, z: 173.811}

@@ -21,14 +21,17 @@ public class MIDIPlayer : MonoBehaviour
     public int midiNoteVolume = 100;
     [Range(0, 127)] //From Piano to Gunshot
     public int midiInstrument = 0;
+
+    public Actor[] actors;
+
     //Private 
     private float[] sampleBuffer;
     private float gain = 1f;
     private MidiSequencer midiSequencer;
     private StreamSynthesizer midiStreamSynthesizer;
 
-    private float sliderValue = 1.0f;
-    private float maxSliderValue = 127.0f;
+    //private float sliderValue = 1.0f;
+    //private float maxSliderValue = 127.0f;
 
     // Awake is called when the script instance
     // is being loaded.
@@ -44,20 +47,19 @@ public class MIDIPlayer : MonoBehaviour
         //These will be fired by the midiSequencer when a song plays. Check the console for messages if you uncomment these
         //midiSequencer.NoteOnEvent += new MidiSequencer.NoteOnEventHandler (MidiNoteOnHandler);
         //midiSequencer.NoteOffEvent += new MidiSequencer.NoteOffEventHandler (MidiNoteOffHandler);			
+        midiSequencer.NoteOnEvent += midiSequencer_NoteOnEvent;
+        midiSequencer.NoteOffEvent += midiSequencer_NoteOffEvent;
     }
 
     void LoadSong(string midiPath)
     {
         midiSequencer.LoadMidi(midiPath, false);
         midiSequencer.Play();
-
-        midiSequencer.NoteOnEvent += midiSequencer_NoteOnEvent;
-        midiSequencer.NoteOffEvent += midiSequencer_NoteOffEvent;
     }
 
     void midiSequencer_NoteOnEvent(int channel, int note, int velocity)
     {
-        UnityMainThreadDispatcher.Instance().Enqueue(NoteOn(channel, note));
+        UnityMainThreadDispatcher.Instance().Enqueue(NoteOn(channel, note, velocity));
     }
 
     void midiSequencer_NoteOffEvent(int channel, int note)
@@ -65,16 +67,11 @@ public class MIDIPlayer : MonoBehaviour
         UnityMainThreadDispatcher.Instance().Enqueue(NoteOff(channel, note));
     }
 
-    IEnumerator NoteOn(int channel, int note)
+    IEnumerator NoteOn(int channel, int note, int velocity)
     {
-        if (channel == 0 || channel == 1)
+        foreach (Actor actor in actors)
         {
-            var child = transform.Find(note.ToString());
-
-            if (child != null)
-            {
-                child.GetComponent<KeyBehaviour>().isPressed = true;
-            }
+            actor.NoteOnEvent(channel, note, velocity);
         }
 
         yield return null;
@@ -82,14 +79,9 @@ public class MIDIPlayer : MonoBehaviour
 
     IEnumerator NoteOff(int channel, int note)
     {
-        if (channel == 0 || channel == 1)
+        foreach (Actor actor in actors)
         {
-            var child = transform.Find(note.ToString());
-
-            if (child != null)
-            {
-                child.GetComponent<KeyBehaviour>().isPressed = false;
-            }
+            actor.NoteOffEvent(channel, note);
         }
 
         yield return null;

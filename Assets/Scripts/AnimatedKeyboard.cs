@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[ExecuteInEditMode]
+[ExecuteInEditMode]
 public class AnimatedKeyboard : Actor
 {
     public Transform keyLLeft;
@@ -17,9 +17,11 @@ public class AnimatedKeyboard : Actor
     public Color[] whiteKeyColors = new Color[7];
     public Color[] blackKeyColors = new Color[5];
 
+    public int listenChannel;
+
     private float[] blackKeyOffsets = new float[7] {0.21f, 0.3f, 0.21f, 0.21f, 0.25f, 0.29f, 0.21f};
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         if (this.transform.childCount == 0)
         {
@@ -78,7 +80,9 @@ public class AnimatedKeyboard : Actor
 
     public override void NoteOnEvent(int channel, int key, int velocity)
     {
-        if (channel == 1)
+        Debug.Log(channel.ToString());
+
+        if (channel == listenChannel)
         {
             var child = transform.Find(key.ToString());
 
@@ -91,7 +95,7 @@ public class AnimatedKeyboard : Actor
 
     public override void NoteOffEvent(int channel, int key)
     {
-        if (channel == 1)
+        if (channel == listenChannel)
         {
             var child = transform.Find(key.ToString());
 

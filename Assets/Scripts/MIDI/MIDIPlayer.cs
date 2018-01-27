@@ -28,7 +28,9 @@ public class MIDIPlayer : MonoBehaviour
     private float[] sampleBuffer;
     private float gain = 1f;
     private MidiSequencer midiSequencer;
+    private MidiSequencer midiSequencerDelayed;
     private StreamSynthesizer midiStreamSynthesizer;
+    private StreamSynthesizer midiStreamSynthesizerDelayed;
 
     //private float sliderValue = 1.0f;
     //private float maxSliderValue = 127.0f;
@@ -38,22 +40,37 @@ public class MIDIPlayer : MonoBehaviour
     void Awake()
     {
         midiStreamSynthesizer = new StreamSynthesizer(44100, 2, bufferSize, 40);
+        midiStreamSynthesizerDelayed = new StreamSynthesizer(44100, 2, bufferSize, 40);
+        midiStreamSynthesizerDelayed.MasterVolume = 0.0f;
+        //midiStreamSynthesizerDelayed.MasterVolume = 0.0f;
+
         sampleBuffer = new float[midiStreamSynthesizer.BufferSize];
         
         midiStreamSynthesizer.LoadBank(bankFilePath);
+        midiStreamSynthesizerDelayed.LoadBank(bankFilePath);
 
         midiSequencer = new MidiSequencer(midiStreamSynthesizer);
+        midiSequencerDelayed = new MidiSequencer(midiStreamSynthesizerDelayed);
 
         //These will be fired by the midiSequencer when a song plays. Check the console for messages if you uncomment these
         //midiSequencer.NoteOnEvent += new MidiSequencer.NoteOnEventHandler (MidiNoteOnHandler);
         //midiSequencer.NoteOffEvent += new MidiSequencer.NoteOffEventHandler (MidiNoteOffHandler);			
         midiSequencer.NoteOnEvent += midiSequencer_NoteOnEvent;
         midiSequencer.NoteOffEvent += midiSequencer_NoteOffEvent;
+        midiSequencerDelayed.NoteOnEvent += midiSequencer_NoteOnEventDelayed;
+        midiSequencerDelayed.NoteOffEvent += midiSequencer_NoteOffEventDelayed;
     }
 
     void LoadSong(string midiPath)
     {
         midiSequencer.LoadMidi(midiPath, false);
+        midiSequencerDelayed.LoadMidi(midiPath, false);
+        midiSequencerDelayed.Play();
+        Invoke("playDelayed", 1f);
+    }
+
+    void playDelayed()
+    {
         midiSequencer.Play();
     }
 
@@ -66,6 +83,17 @@ public class MIDIPlayer : MonoBehaviour
     {
         UnityMainThreadDispatcher.Instance().Enqueue(NoteOff(channel, note));
     }
+
+    void midiSequencer_NoteOnEventDelayed(int channel, int note, int velocity)
+    {
+        UnityMainThreadDispatcher.Instance().Enqueue(NoteOnDelayed(channel, note, velocity));
+    }
+
+    void midiSequencer_NoteOffEventDelayed(int channel, int note)
+    {
+        UnityMainThreadDispatcher.Instance().Enqueue(NoteOffDelayed(channel, note));
+    }
+
 
     IEnumerator NoteOn(int channel, int note, int velocity)
     {
@@ -82,6 +110,26 @@ public class MIDIPlayer : MonoBehaviour
         foreach (Actor actor in actors)
         {
             actor.NoteOffEvent(channel, note);
+        }
+
+        yield return null;
+    }
+
+    IEnumerator NoteOnDelayed(int channel, int note, int velocity)
+    {
+        foreach (Actor actor in actors)
+        {
+            actor.NoteOnEventDelayed(channel, note, velocity);
+        }
+
+        yield return null;
+    }
+
+    IEnumerator NoteOffDelayed(int channel, int note)
+    {
+        foreach (Actor actor in actors)
+        {
+            actor.NoteOffEventDelayed(channel, note);
         }
 
         yield return null;
@@ -108,6 +156,7 @@ public class MIDIPlayer : MonoBehaviour
         else if (!ShouldPlayFile)
         {
             midiSequencer.Stop(true);
+            midiSequencerDelayed.Stop(true);
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -140,6 +189,7 @@ public class MIDIPlayer : MonoBehaviour
         private void OnAudioFilterRead(float[] data, int channels)
     {
         //This uses the Unity specific float method we added to get the buffer
+        midiStreamSynthesizerDelayed.GetNext(sampleBuffer);
         midiStreamSynthesizer.GetNext(sampleBuffer);
 
         for (int i = 0; i < data.Length; i++)

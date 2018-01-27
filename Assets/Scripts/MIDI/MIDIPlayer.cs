@@ -32,6 +32,9 @@ public class MIDIPlayer : MonoBehaviour
     private StreamSynthesizer midiStreamSynthesizer;
     private StreamSynthesizer midiStreamSynthesizerDelayed;
 
+    private float synchTimer = 1f;
+    private bool hasStartedTrack;
+
     //private float sliderValue = 1.0f;
     //private float maxSliderValue = 127.0f;
 
@@ -66,12 +69,6 @@ public class MIDIPlayer : MonoBehaviour
         midiSequencer.LoadMidi(midiPath, false);
         midiSequencerDelayed.LoadMidi(midiPath, false);
         midiSequencerDelayed.Play();
-        Invoke("playDelayed", 1f);
-    }
-
-    void playDelayed()
-    {
-        midiSequencer.Play();
     }
 
     void midiSequencer_NoteOnEvent(int channel, int note, int velocity)
@@ -151,6 +148,14 @@ public class MIDIPlayer : MonoBehaviour
             if (ShouldPlayFile)
             {
                 LoadSong(midiFilePath);
+                
+                if (synchTimer > 0 && !hasStartedTrack) 
+                    synchTimer -= Time.deltaTime;
+                else if (!hasStartedTrack)
+                {
+                    midiSequencer.Play();
+                    hasStartedTrack = true;
+                }
             }
         }
         else if (!ShouldPlayFile)
